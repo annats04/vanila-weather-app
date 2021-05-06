@@ -36,13 +36,36 @@ console.log(response.data)
     windElement.innerHTML = Math.round(response.data.wind.speed);
     let dateElement = document.querySelector("#date");
     dateElement.innerHTML = formatDate(response.data.dt * 1000);
+let iconElement = document.querySelector("#icon");
+  iconElement.setAttribute(
+    "src",
+    `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
+  );
+   iconElement.setAttribute("alt", response.data.weather[0].description);
+  
 }
 
 
-let apiKey = "3a327a359d60ca00abec49d1dbb82cad";
-let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=Aarhus&appid=${apiKey}&units=metric`;
+function search(city) {
+ let apiKey = "3a327a359d60ca00abec49d1dbb82cad";
 
-console.log(apiUrl);
+let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+axios.get(apiUrl).then(displayTemperature);   
+}
 
-axios.get(apiUrl).then(displayTemperature)
 
+function handleSubmit(event) {
+event.preventDefault();
+let cityInputElement = document.querySelector("#city-input");
+search(cityInputElement.value);
+
+}
+
+
+
+
+
+let form = document.querySelector("#search-form");
+form.addEventListener("submit", handleSubmit);
+
+search("New York");
