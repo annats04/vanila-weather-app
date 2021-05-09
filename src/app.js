@@ -43,6 +43,7 @@ let iconElement = document.querySelector("#icon");
   );
    iconElement.setAttribute("alt", response.data.weather[0].description);
   
+   celsiusTemperature = response.data.main.temp;
 }
 
 
@@ -67,5 +68,28 @@ search(cityInputElement.value);
 
 let form = document.querySelector("#search-form");
 form.addEventListener("submit", handleSubmit);
+
+
+function displayFarTemperature (event) {
+    event.preventDefault();
+    let fahrenheitTemperature = (celsiusTemperature * 9) / 5 + 32;
+    let temperatureElement = document.querySelector("#temperature");
+    temperatureElement.innerHTML = Math.round(fahrenheitTemperature);
+}
+
+function displayCelsiusTemperature(event) {
+  event.preventDefault();
+   let temperatureElement = document.querySelector("#temperature");
+temperatureElement.innerHTML = celsiusTemperature;
+  }
+
+let celsiusTemperature = null;
+
+let farLink = document.querySelector("#far");
+farLink.addEventListener("click", displayFarTemperature)
+
+
+let celsiusLink = document.querySelector("#celsius-link");
+celsiusLink.addEventListener("click", displayFarTemperature)
 
 search("New York");
